@@ -1,9 +1,9 @@
 #!/bin/bash
 # Load the necessary modules (software)
 module purge
-module load ncarenv/1.2
-module load nvhpc/20.11
-module load cuda/11.0.3
+module load ncarenv/1.3
+module load nvhpc/22.5
+module load cuda/11.7
 module list
 
 # Export variables for use in the Makefile

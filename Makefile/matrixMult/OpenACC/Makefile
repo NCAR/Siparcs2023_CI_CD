@@ -8,6 +8,8 @@ CFLAGS= -g -O3 -Wall -std=c++11
 LDFLAGS= 
 
 ACCFLAGS= -acc -gpu=cc60,cc70,managed -I${NVHPC_ROOT_PATH}/include 
+ACCFLAGS= 
+
 # final executable file
 BINARY= matrix_mult
 # name of object files

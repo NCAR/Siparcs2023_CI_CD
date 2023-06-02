@@ -15,10 +15,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: Navigate to directory
+    - name: Navigate to directory and make
       run: |
         cd Makefile/matrixMult/FORTRAN/ 
         pwd
-    - name: makefile
-      run: make
+        make
 

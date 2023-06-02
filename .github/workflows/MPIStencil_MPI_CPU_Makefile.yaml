@@ -1,0 +1,22 @@
+name: MPIStencil_MPI_CPU_Makefile
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  Makefile:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Navigate to directory and make
+      run: |
+        cd Makefile/MPIStencil/MPI/CPU/
+        pwd
+        make

@@ -1,0 +1,24 @@
+name: matrixMult_Fortran_Makefile
+
+on: 
+  push:
+    branches: 
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  Makefile:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Navigate to directory
+      run: |
+        cd Makefile/matrixMult/FORTRAN/ 
+        pwd
+    - name: makefile
+      run: make
+

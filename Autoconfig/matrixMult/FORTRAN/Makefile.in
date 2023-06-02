@@ -2,7 +2,7 @@
 F90=@FC@
 
 #Compiler flags
-FFLAGS= @FFLAGS@
+FCFLAGS= @FCFLAGS@
 
 # final executable file
 BINARY= matrix_mult
@@ -17,7 +17,7 @@ $(BINARY): $(OBJECTS)
 	$(F90) -o $(BINARY) $(OBJECTS) 
 
 $(OBJECTS): $(FFILES)
-	$(F90) -c $(FFLAGS) $<
+	$(F90) -c $(FCFLAGS) $<
 
 clean: 
 	rm *.o $(BINARY)

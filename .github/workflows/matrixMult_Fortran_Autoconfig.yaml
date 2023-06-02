@@ -1,0 +1,25 @@
+name: matrixMult_Fortran_Autoconfig
+
+on: 
+  push:
+    branches: 
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  Makefile:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Navigate to directory and autoconfig
+      run: |
+        cd Autoconfig/matrixMult/FORTRAN/ 
+        pwd
+        autoconf
+        ./configure
+        make
+

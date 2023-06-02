@@ -1,5 +1,5 @@
 #Compiler
-F90=nvfortran
+F90=gfortran
 
 #Compiler flags
 FFLAGS= -O3 -Wall -Mfree

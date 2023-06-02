@@ -2,7 +2,7 @@
 F90=gfortran
 
 #Compiler flags
-FFLAGS= -O3 -Wall -Mfree
+FFLAGS= -O3 -Wall -free
 
 # final executable file
 BINARY= matrix_mult

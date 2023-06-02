@@ -1,0 +1,26 @@
+name: matrixMult_Fortran_CMake
+
+on: 
+  push:
+    branches: 
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  Makefile:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Navigate to directory and do cmake
+      run: |
+        cd CMake/matrixMult/FORTRAN/ 
+        pwd
+        mkdir build
+        cd build
+        cmake ..
+        make
+

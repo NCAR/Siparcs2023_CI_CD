@@ -1,0 +1,27 @@
+name: MPIStencil_MPI_CPU_Autoconfig
+
+on: 
+  push:
+    branches: 
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  Makefile:
+    runs-on: ubuntu-latest
+    container:
+      image: haniyeka/my_mpi_container
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Navigate to directory and autoconfig
+      run: |
+        cd Autoconfig/MPIStencil/MPI/CPU/ 
+        pwd
+        autoconf
+        ./configure
+        make
+

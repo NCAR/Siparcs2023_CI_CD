@@ -13,7 +13,7 @@ jobs:
   Makefile:
     runs-on: ubuntu-latest
     container:
-      image: nvidia/cuda:12.1.1-devel-ubuntu22.04
+      image: haniyeka/my_mpi_container
     steps:
     - uses: actions/checkout@v3
 

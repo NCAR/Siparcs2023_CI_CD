@@ -22,3 +22,5 @@ jobs:
         cd Makefile/MPIStencil/MPI/CPU/
         pwd
         make
+        echo "Test run:"
+        ./MPIStencil

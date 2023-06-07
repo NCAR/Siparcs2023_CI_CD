@@ -22,7 +22,6 @@ jobs:
         autoconf
         ./configure
         make
-        
-    - name: test run 
-      run: |
+        echo "Test Run:"
         ./matrix_mult
+        

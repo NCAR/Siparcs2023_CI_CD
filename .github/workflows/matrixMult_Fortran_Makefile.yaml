@@ -6,7 +6,6 @@ on:
       - main
     paths: 
       - Makefile/matrixMult/FORTRAN/ 
-    
   pull_request:
     branches:
       - main

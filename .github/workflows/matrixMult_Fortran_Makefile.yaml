@@ -5,7 +5,7 @@ on:
     branches: 
       - main
     paths: 
-      - .github/workflow/matrixMult_Fortran_Makefile.yaml
+      - .github/workflows/matrixMult_Fortran_Makefile.yaml
       - Makefile/matrixMult/FORTRAN/ 
     
   pull_request:

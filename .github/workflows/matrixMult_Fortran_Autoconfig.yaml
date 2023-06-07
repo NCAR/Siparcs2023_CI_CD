@@ -22,5 +22,7 @@ jobs:
         autoconf
         ./configure
         make
-        ./matrixMult
-
+        
+    - name: test run 
+      run: |
+        ./matrix_mult

@@ -7,5 +7,4 @@ AC_PROG_FC
 FFLAGS="-O3 -Wall -free"
 
 AC_SUBST([FFLAGS])
-
 AC_OUTPUT(Makefile)

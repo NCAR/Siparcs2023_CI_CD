@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(MPIStensil)
+project(MPIStencil)
 
 find_package(MPI REQUIRED)
 
 file(GLOB SOURCES *.cpp)
 
-add_executable(MPIStensil ${SOURCES})
+add_executable(MPIStencil ${SOURCES})
 
-target_link_libraries(MPIStensil MPI::MPI_CXX)
+target_link_libraries(MPIStencil MPI::MPI_CXX)

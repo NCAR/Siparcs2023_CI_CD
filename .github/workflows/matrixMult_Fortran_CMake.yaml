@@ -5,7 +5,7 @@ on:
     branches: 
       - main
     paths: 
-      - .github/workflows/matrixMult_Fortran_CMake.yaml.yaml
+      - .github/workflows/matrixMult_Fortran_CMake.yaml
       - CMake/matrixMult/FORTRAN/ 
   pull_request:
     branches:

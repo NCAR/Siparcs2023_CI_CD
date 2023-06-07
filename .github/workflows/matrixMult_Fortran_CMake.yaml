@@ -23,4 +23,8 @@ jobs:
         cd build
         cmake ..
         make
+        
+    - name: test run 
+      run: |
+        ./matrix_mult
 

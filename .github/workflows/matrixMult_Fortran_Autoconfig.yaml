@@ -4,6 +4,8 @@ on:
   push:
     branches: 
       - main
+    paths: 
+      - CMake/matrixMult/FORTRAN/ 
   pull_request:
     branches:
       - main

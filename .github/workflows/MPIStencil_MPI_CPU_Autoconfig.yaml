@@ -27,4 +27,4 @@ jobs:
         ./configure
         make
         echo "Test run:"
-        ./MPIStensil
+        ./MPIStencil

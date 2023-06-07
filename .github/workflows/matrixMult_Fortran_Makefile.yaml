@@ -20,5 +20,5 @@ jobs:
         cd Makefile/matrixMult/FORTRAN/ 
         pwd
         make
-        ./matrixMult
+        ./matrix_mult
 

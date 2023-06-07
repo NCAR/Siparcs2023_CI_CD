@@ -5,7 +5,7 @@ on:
     branches: 
       - main
     paths: 
-      - Makefile/matrixMult/FORTRAN/ 
+      - Makefile/matrixMult/FORTRAN/** 
   pull_request:
     branches:
       - main

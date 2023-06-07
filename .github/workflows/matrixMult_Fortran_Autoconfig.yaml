@@ -5,7 +5,7 @@ on:
     branches: 
       - main
     paths: 
-      - CMake/matrixMult/FORTRAN/ 
+      - Autoconfig/matrixMult/FORTRAN/ 
   pull_request:
     branches:
       - main

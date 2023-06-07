@@ -20,7 +20,5 @@ jobs:
         cd Makefile/matrixMult/FORTRAN/ 
         pwd
         make
-    - name: test run 
-      run: |
+        echo "Test Run:"
         ./matrix_mult
-

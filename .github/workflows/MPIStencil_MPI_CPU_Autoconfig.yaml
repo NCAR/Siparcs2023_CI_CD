@@ -4,6 +4,8 @@ on:
   push:
     branches: 
       - main
+    paths: 
+      - Autoconfig/MPIStencil/MPI/CPU/ 
   pull_request:
     branches:
       - main

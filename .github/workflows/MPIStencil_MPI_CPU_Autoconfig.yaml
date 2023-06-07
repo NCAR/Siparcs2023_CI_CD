@@ -24,4 +24,5 @@ jobs:
         autoconf
         ./configure
         make
-
+        echo "Test run:"
+        ./MPIStensil

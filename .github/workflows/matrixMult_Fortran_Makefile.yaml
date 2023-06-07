@@ -2,11 +2,11 @@ name: matrixMult_Fortran_Makefile
 
 on: 
   push:
+    branches: 
+      - main
     paths: 
       - .github/workflow/matrixMult_Fortran_Makefile.yaml
       - Makefile/matrixMult/FORTRAN/ 
-    branches: 
-      - main
     
   pull_request:
     branches:

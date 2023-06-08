@@ -31,8 +31,11 @@ RUN mkdir -p ${NVHPC_INSTALL_DIR} && \
     ls -lh ${NVHPC_INSTALL_DIR}
 
 # Install NVHPC
-RUN tar -xvf ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE} -C ${NVHPC_INSTALL_DIR} && \
-    cd ${NVHPC_INSTALL_DIR}/${NVHPC_VERSION} 
+RUN tar -xvf ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE} -C ${NVHPC_INSTALL_DIR} 
+
+RUN ls -lh
+
+RUN cd ${NVHPC_INSTALL_DIR}/${NVHPC_VERSION} 
     
 RUN ./install -s install_components=nvfortran,nvc++,nvcc \
     -d ${NVHPC_ROOT_PATH} && \

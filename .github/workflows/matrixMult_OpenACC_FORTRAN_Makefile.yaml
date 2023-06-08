@@ -1,4 +1,4 @@
-name: matrixMult_OPENACC_Fortran_Makefile
+name: matrixMult_OpenACC_Fortran_Makefile
 
 on:
   schedule:
@@ -7,7 +7,7 @@ on:
     branches: 
       - main
     paths: 
-      - Makefile/matrixMult/OPENACC_FORTRAN/** 
+      - Makefile/matrixMult/OpenACC_FORTRAN/** 
   pull_request:
     branches:
       - main
@@ -21,7 +21,7 @@ jobs:
     
     - name: Navigate to directory and make
       run: |
-        cd Makefile/matrixMult/OPENACC_FORTRAN/ 
+        cd Makefile/matrixMult/OpenACC_FORTRAN/ 
         pwd
         make
         echo "Test Run:"

@@ -12,7 +12,7 @@ ENV PATH=${PATH}:${CUDA}/bin
 ENV NVHPC_INSTALL_DIR /opt/nvidia
 ENV NVHPC_VERSION 23.5
 ENV CUDA_VERSION 12.1
-ENV NVHPC_PACKAGE nvhpc_2023_235_Linux_x86_64_cuda_${CUDA_VERSION}.tar.gz
+ENV NVHPC_PACKAGE nvhpc_2023_235_Linux_x86_64_cuda_${CUDA_VERSION}
 ENV NVHPC_ROOT_PATH ${NVHPC_INSTALL_DIR}/nvhpc
 
 # Update and install dependencies
@@ -26,7 +26,7 @@ RUN apt-get update && apt-get install -y \
 # Download NVHPC package
 RUN mkdir -p ${NVHPC_INSTALL_DIR} && \
     wget -q --show-progress --progress=bar:force:noscroll \
-    https://developer.download.nvidia.com/hpc-sdk/${NVHPC_VERSION}/${NVHPC_PACKAGE} \
+    https://developer.download.nvidia.com/hpc-sdk/${NVHPC_VERSION}/${NVHPC_PACKAGE}.tar.gz \
     -O ${NVHPC_INSTALL_DIR}/${NVHPC_VERSION} && \
     ls -lh ${NVHPC_INSTALL_DIR}
 

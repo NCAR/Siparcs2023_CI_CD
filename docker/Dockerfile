@@ -39,7 +39,7 @@ RUN cd ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE}
     
 RUN ./install -s install_components=nvfortran,nvc++,nvcc \
     -d ${NVHPC_ROOT_PATH} && \
-    rm -rf ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE}
+    rm -rf ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE}.tar.gz
 
 # Update environment variables for NVHPC
 ENV PATH ${NVHPC_ROOT_PATH}/Linux_x86_64/23.5/compilers/bin:${PATH}

@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir -p ${NVHPC_INSTALL_DIR} && \
     wget -q --show-progress --progress=bar:force:noscroll \
     https://developer.download.nvidia.com/hpc-sdk/${NVHPC_VERSION}/${NVHPC_PACKAGE} \
-    -O ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE} && \
+    -O ${NVHPC_INSTALL_DIR}/${NVHPC_VERSION} && \
     ls -lh ${NVHPC_INSTALL_DIR}
 
 # Install NVHPC

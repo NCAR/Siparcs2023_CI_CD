@@ -12,9 +12,7 @@ on:
     branches:
       - main
   workflow_dispatch:
-  
-env: 
-  IMAGE_NAME: dockerimage
+
 jobs:
   BuildContainer:
     runs-on: ubuntu-latest
@@ -29,4 +27,4 @@ jobs:
         context: .
         file: ./docker/Dockerfile
         load: true
-        tags: $IMAGE_NAME:latest
+        tags: dockerimage:latest

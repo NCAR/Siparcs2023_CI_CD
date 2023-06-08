@@ -33,7 +33,7 @@ RUN mkdir -p ${NVHPC_INSTALL_DIR} && \
 # Install NVHPC
 RUN tar -xvf ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE} -C ${NVHPC_INSTALL_DIR} 
 
-RUN ls -lh
+RUN ls -lh /opt/nvidia
 
 RUN cd ${NVHPC_INSTALL_DIR}/${NVHPC_VERSION} 
     

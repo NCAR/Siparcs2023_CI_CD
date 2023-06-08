@@ -1,0 +1,28 @@
+name: matrixMult_OPENACC_Fortran_Makefile
+
+on:
+  schedule:
+    - cron: '0 0 * * MON' 
+  push:
+    branches: 
+      - main
+    paths: 
+      - Makefile/matrixMult/OPENACC_FORTRAN/** 
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  Makefile:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Navigate to directory and make
+      run: |
+        cd Makefile/matrixMult/OPENACC_FORTRAN/ 
+        pwd
+        make
+        echo "Test Run:"
+        ./matrix_mult

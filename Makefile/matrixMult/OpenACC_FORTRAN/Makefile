@@ -1,8 +1,9 @@
 #Compiler
-F90=gfortran
+F90=nvfortran
 
 #Compiler flags
 FFLAGS= -O3 -Wall -free
+ACCFLAGS= acc -gpu=cc60,cc70,managed -Minfo=all -I${NVHPC_ROOT_PATH}/include
 
 # final executable file
 BINARY= matrix_mult
@@ -14,10 +15,10 @@ FFILES= matrix_mult.f90
 all: $(BINARY)
 
 $(BINARY): $(OBJECTS)
-	$(F90) -o $(BINARY) $(OBJECTS) 
+	$(F90) -o $(BINARY) $(OBJECTS) $(FFLAGS) $(ACCFLAGS) 
 
 $(OBJECTS): $(FFILES)
-	$(F90) -c $(FFLAGS) $<
+	$(F90) -c $(FFLAGS) $(ACCFLAGS) $<
 
 clean: 
 	rm *.o $(BINARY)

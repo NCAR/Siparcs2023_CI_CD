@@ -35,11 +35,11 @@ RUN tar -xvf ${NVHPC_INSTALL_DIR}/${NVHPC_VERSION} -C ${NVHPC_INSTALL_DIR}
 
 RUN ls -lh /opt/nvidia
 
-RUN cd ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE} 
+RUN cd ${NVHPC_INSTALL_DIR}/${NVHPC_VERSION} 
     
 RUN ./install -s install_components=nvfortran,nvc++,nvcc \
     -d ${NVHPC_ROOT_PATH} && \
-    rm -rf ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE}.tar.gz
+    rm -rf ${NVHPC_INSTALL_DIR}/${NVHPC_VERSION}
 
 # Update environment variables for NVHPC
 ENV PATH ${NVHPC_ROOT_PATH}/Linux_x86_64/23.5/compilers/bin:${PATH}

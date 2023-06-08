@@ -18,7 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     env: 
       IMAGE_NAME: dockerimage
-      
+    container:
+      image: ${{ env.IMAGE_NAME }}:latest
     steps:
     - name: checkout
       uses: actions/checkout@v3
@@ -33,8 +34,6 @@ jobs:
         tags: ${{ env.IMAGE_NAME }}:latest
         
     - name: Navigate to directory and make
-      container: 
-        image: ${{ env.IMAGE_NAME }}:latest
       run: |
         cd Makefile/matrixMult/OpenACC_FORTRAN/ 
         pwd

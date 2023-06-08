@@ -18,7 +18,7 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     container:
-      image: ${{ env.IMAGE_NAME }}:latest
+      image: $IMAGE_NAME:latest
     steps:
     - name: checkout
       uses: actions/checkout@v3
@@ -30,7 +30,7 @@ jobs:
         context: .
         file: ./docker/Dockerfile
         load: true
-        tags: ${{ env.IMAGE_NAME }}:latest
+        tags: $IMAGE_NAME:latest
         
     - name: Navigate to directory and make
       run: |

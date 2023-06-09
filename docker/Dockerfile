@@ -55,8 +55,10 @@ RUN tar -xvf ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE}.tar.gz -C ${NVHPC_INSTALL_DIR
 
 RUN ls -lh /opt/nvidia
 
-RUN cd ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE} 
-    
+RUN cd ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE} && \
+    ls -lh
+
+
 RUN ./install -s install_components=nvfortran,nvc++,nvcc \
     -d ${NVHPC_ROOT_PATH} 
    # rm -rf ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE}

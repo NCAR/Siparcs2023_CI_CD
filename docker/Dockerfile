@@ -70,7 +70,8 @@ ARG OPENMPI_SHORT_VERSION=4.1
 ARG OPENMPI_LONG_VERSION=4.1.5
 
 RUN cd /usr/local/src && \
-	curl --retry 5 -fSsL "http://www.open-mpi.org/software/ompi/v${OPENMPI_SHORT_VERSION}/downloads/openmpi-${OPENMPI_LONG_VERSION}.tar.gz" | tar xz && \
+	wget -q --show-progress --progress=bar:force:noscroll \
+	"http://www.open-mpi.org/software/ompi/v${OPENMPI_SHORT_VERSION}/downloads/openmpi-${OPENMPI_LONG_VERSION}.tar.gz" | tar xz && \
 	cd openmpi-* && \
 	export   CFLAGS=" -m64 -tp=zen2 -fpic" && \
 	export CXXFLAGS=" -m64 -tp=zen2 -fpic" && \

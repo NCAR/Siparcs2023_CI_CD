@@ -40,24 +40,24 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gfortran \
 	autotools-dev \
     
-    libopenmpi-dev \
+   # libopenmpi-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Download NVHPC package
-RUN mkdir -p ${NVHPC_INSTALL_DIR} && \
-    wget -q --show-progress --progress=bar:force:noscroll \
-    https://developer.download.nvidia.com/hpc-sdk/${NVHPC_VERSION}/${NVHPC_PACKAGE}.tar.gz \
-    -O ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE}.tar.gz && \
-    ls -lh ${NVHPC_INSTALL_DIR}
+#RUN mkdir -p ${NVHPC_INSTALL_DIR} && \
+#    wget -q --show-progress --progress=bar:force:noscroll \
+#    https://developer.download.nvidia.com/hpc-sdk/${NVHPC_VERSION}/${NVHPC_PACKAGE}.tar.gz \
+#    -O ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE}.tar.gz && \
+#    ls -lh ${NVHPC_INSTALL_DIR}
 
 # Install NVHPC
-RUN tar -xvf ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE}.tar.gz -C ${NVHPC_INSTALL_DIR} 
+#RUN tar -xvf ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE}.tar.gz -C ${NVHPC_INSTALL_DIR} 
 
-RUN ls -lh /opt/nvidia
+#RUN ls -lh /opt/nvidia
 
-RUN cd ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE} && \
-    ls -lh && \
-    ./install 
+#RUN cd ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE} && \
+#    ls -lh && \
+#    ./install 
    # rm -rf ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE}
 
 

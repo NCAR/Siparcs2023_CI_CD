@@ -30,35 +30,38 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Update and install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     pkg-config \
-	git \
+    git \
     build-essential \
     wget \
     cmake \
     make \
-	automake \
+    automake \
     autoconf \
     gfortran \
-	autotools-dev \
+    autotools-dev \
     
    # libopenmpi-dev \
     && rm -rf /var/lib/apt/lists/*
-
+    
+RUN gcc --version && \
+    g++ --version && \
+    gfortran --version
 # Download NVHPC package
-#RUN mkdir -p ${NVHPC_INSTALL_DIR} && \
-#    wget -q --show-progress --progress=bar:force:noscroll \
-#    https://developer.download.nvidia.com/hpc-sdk/${NVHPC_VERSION}/${NVHPC_PACKAGE}.tar.gz \
-#    -O ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE}.tar.gz && \
-#    ls -lh ${NVHPC_INSTALL_DIR}
+RUN mkdir -p ${NVHPC_INSTALL_DIR} && \
+    wget -q --show-progress --progress=bar:force:noscroll \
+    https://developer.download.nvidia.com/hpc-sdk/${NVHPC_VERSION}/${NVHPC_PACKAGE}.tar.gz \
+    -O ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE}.tar.gz && \
+    ls -lh ${NVHPC_INSTALL_DIR}
 
 # Install NVHPC
-#RUN tar -xvf ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE}.tar.gz -C ${NVHPC_INSTALL_DIR} 
+RUN tar xpfz ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE}.tar.gz -C ${NVHPC_INSTALL_DIR}
 
-#RUN ls -lh /opt/nvidia
+RUN ls -lh /opt/nvidia
 
-#RUN cd ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE} && \
-#    ls -lh && \
-#    ./install 
-   # rm -rf ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE}
+RUN cd ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE} && \
+    ls -lh && \
+    ./install
+    # rm -rf ${NVHPC_INSTALL_DIR}/${NVHPC_PACKAGE}
 
 
 # Update environment variables for NVHPC
@@ -71,13 +74,14 @@ ARG OPENMPI_LONG_VERSION=4.1.5
 
 RUN cd /usr/local/src && \
 	wget -q --show-progress --progress=bar:force:noscroll \
-	"http://www.open-mpi.org/software/ompi/v${OPENMPI_SHORT_VERSION}/downloads/openmpi-${OPENMPI_LONG_VERSION}.tar.gz" | tar xz && \
-	cd openmpi-* && \
-	export   CFLAGS=" -m64 -tp=zen2 -fpic" && \
-	export CXXFLAGS=" -m64 -tp=zen2 -fpic" && \
-	export  FCFLAGS=" -m64 -tp=zen2 -fpic" && \
-	export  CFLAGS+=" -Mnodalign -Mautoinline" && \
-	export LDFLAGS+=" -ldl -latomic" && \
+	"http://www.open-mpi.org/software/ompi/v${OPENMPI_SHORT_VERSION}/downloads/openmpi-${OPENMPI_LONG_VERSION}.tar.gz" && \
+	tar -xvf openmpi-${OPENMPI_LONG_VERSION}.tar.gz && \
+	cd openmpi-${OPENMPI_LONG_VERSION} && \
+	#export   CFLAGS=" -m64 -tp=zen2 -fpic" && \
+	#export CXXFLAGS=" -m64 -tp=zen2 -fpic" && \
+	#export  FCFLAGS=" -m64 -tp=zen2 -fpic" && \
+	#export  CFLAGS+=" -Mnodalign -Mautoinline" && \
+	#export LDFLAGS+=" -ldl -latomic" && \
 	./configure --prefix=/usr/local \
 				--with-ucx=/usr/local \
 				--with-ucx-libdir=/usr/local/lib \

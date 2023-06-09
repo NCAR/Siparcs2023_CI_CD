@@ -46,11 +46,11 @@ RUN cd /usr/local/src && \
         "http://www.open-mpi.org/software/ompi/v${OPENMPI_SHORT_VERSION}/downloads/openmpi-${OPENMPI_LONG_VERSION}.tar.gz" && \
         tar -xvf openmpi-${OPENMPI_LONG_VERSION}.tar.gz && \
         cd openmpi-${OPENMPI_LONG_VERSION} && \
-	export   CFLAGS=" -m64 -tp=zen2 -fpic" && \
-	export CXXFLAGS=" -m64 -tp=zen2 -fpic" && \
-	export  FCFLAGS=" -m64 -tp=zen2 -fpic" && \
-	export  CFLAGS+=" -Mnodalign -Mautoinline" && \
-	export LDFLAGS+=" -ldl -latomic" && \
+	#export   CFLAGS=" -m64 -tp=zen2 -fpic" && \
+	#export CXXFLAGS=" -m64 -tp=zen2 -fpic" && \
+	#export  FCFLAGS=" -m64 -tp=zen2 -fpic" && \
+	#export  CFLAGS+=" -Mnodalign -Mautoinline" && \
+	#export LDFLAGS+=" -ldl -latomic" && \
         ./configure --prefix=/usr/local \
                                 --disable-silent-rules \
                                 --enable-shared --disable-static \

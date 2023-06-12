@@ -1,4 +1,0 @@
-name: 'Use Dockerfile Action'
-runs:
-  using: 'docker'
-  image: 'Dockerfile'

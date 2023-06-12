@@ -1,4 +1,4 @@
-name: Dockerfile_workflow
+name: Check Dockerfile
 
   
 on:
@@ -34,3 +34,4 @@ jobs:
     - name: echo
       run:
         echo "Dockerfile works!"
+        nvc++ --version

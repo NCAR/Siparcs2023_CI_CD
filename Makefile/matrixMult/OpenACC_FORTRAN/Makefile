@@ -3,7 +3,7 @@ F90=nvfortran
 
 #Compiler flags
 FFLAGS= -O3 -Wall -Mfree
-ACCFLAGS= acc -gpu=cc60,cc70,managed -Minfo=all -I${NVHPC_ROOT_PATH}/include
+ACCFLAGS= -acc -gpu=cc60,cc70,managed -Minfo=all -I${NVHPC_ROOT_PATH}/include
 
 # final executable file
 BINARY= matrix_mult

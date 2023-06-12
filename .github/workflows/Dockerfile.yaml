@@ -18,7 +18,7 @@ jobs:
   BuildContainer:
     runs-on: ubuntu-latest
     container:
-      image: 'NCAR/Siparcs2023_CI_CD'
+      image: ${{ github.workspace }}/project
     steps:
     - name: checkout
       uses: actions/checkout@v3

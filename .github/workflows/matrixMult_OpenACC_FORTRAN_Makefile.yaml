@@ -12,13 +12,12 @@ on:
     branches:
       - main
   workflow_dispatch:
-env: 
-  IMAGE_NAME: haniyeka/cuda_mpi_container
+  
 jobs:
   Build:
     runs-on: ubuntu-latest
     container:
-      image: $IMAGE_NAME
+      image: haniyeka/cuda_mpi_container
     steps:
     - name: checkout
       uses: actions/checkout@v3        

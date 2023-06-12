@@ -16,7 +16,7 @@ on:
 
 jobs:
   BuildContainer:
-    runs-on: docker
+    runs-on: ubuntu-latest
     container:
       image: docker/Dockerfile
     steps:

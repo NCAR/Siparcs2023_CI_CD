@@ -16,9 +16,9 @@ on:
 
 jobs:
   BuildContainer:
-    runs-on: ubuntu-latest
+    runs-on: docker
     container:
-      image: ${{ github.workspace }}/docker
+      image: docker/Dockerfile
     steps:
     - name: checkout
       uses: actions/checkout@v3

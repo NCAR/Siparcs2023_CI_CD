@@ -1,4 +1,4 @@
 name: 'Use Dockerfile Action'
 runs:
   using: 'docker'
-  image: 'docker/Dockerfile'
+  image: 'Dockerfile'

@@ -32,5 +32,6 @@ jobs:
       #  load: true
       #  tags: dockerimage:latest
     - name: check
+      uses: ./.github/workflows/actions.yml
       run:
         echo "Dockerfile works!"

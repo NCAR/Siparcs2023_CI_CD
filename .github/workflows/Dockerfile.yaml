@@ -17,8 +17,6 @@ on:
 jobs:
   BuildContainer:
     runs-on: ubuntu-latest
-    container:
-      image: docker/Dockerfile
     steps:
     - name: checkout
       uses: actions/checkout@v3

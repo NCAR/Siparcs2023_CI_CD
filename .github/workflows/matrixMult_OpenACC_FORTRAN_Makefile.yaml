@@ -17,7 +17,7 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     container:
-      image: haniyeka/cuda_mpi_container:3.0
+      image: haniyeka/cuda_mpi_container:1.0
     steps:
     - name: checkout
       uses: actions/checkout@v3        

@@ -23,7 +23,6 @@ jobs:
       uses: actions/checkout@v3        
     - name: Navigate to directory and make
       run: |
-        nvidia-smi
         cd Makefile/matrixMult/OpenACC_FORTRAN/ 
         pwd
         make

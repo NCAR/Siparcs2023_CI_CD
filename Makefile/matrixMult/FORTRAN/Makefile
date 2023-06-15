@@ -2,7 +2,7 @@
 F90=nvfortran
 
 #Compiler flags
-FFLAGS= -O3 -Wall -free
+FFLAGS= -O3 -Wall -Mfree
 
 # final executable file
 BINARY= matrix_mult

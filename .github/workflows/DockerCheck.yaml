@@ -28,8 +28,6 @@ jobs:
         file: ./docker/Dockerfile
         load: true
         tags: dockerimage:latest
-    #- name: check
-      #uses: ./.github/workflows/
     - name: echo
       run:
         echo "Dockerfile works!"

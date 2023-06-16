@@ -1,5 +1,5 @@
 #compiler
-MPICC=mpic++
+MPICC=nvc++
 
 #compiler flag
 CFLAGS= -g -O3 -Wall -std=c++11

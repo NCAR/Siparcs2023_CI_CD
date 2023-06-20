@@ -1,0 +1,42 @@
+version: 2.1
+executors:
+  executor:
+    docker:
+      - image: nvcr.io/nvidia/nvhpc:23.5-devel-cuda12.1-ubuntu22.04
+workflows:
+  node-tests:
+    jobs:
+      - build-and-test-CMake-matrixMult-FORTRAN
+      
+jobs:
+  build-and-test-CMake-matrixMult-FORTRAN:
+    working_directory: ~/CMake/matrixMult/FORTRAN/
+    executor: executor
+    steps:
+      - checkout
+      - run:
+          name: Check directory
+          command: pwd
+      - run: 
+          name: create build directory for cmake
+          command: mkdir build && cd build 
+      - run: 
+          name: cmake
+          command: cmake ..
+      - run: 
+          name: make
+          command: make
+      - run:
+          name: test binary
+          command: echo "Test Run: " && ./matrix_mult
+      
+      - run:
+          name: Install Dependencies
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Run Tests
+          command: npm test

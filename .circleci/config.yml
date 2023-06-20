@@ -4,10 +4,10 @@ executors:
     docker:
       - image: nvcr.io/nvidia/nvhpc:23.5-devel-cuda12.1-ubuntu22.04
 workflows:
-  node-tests:
+  build-and-test:
     jobs:
       - build-and-test-CMake-matrixMult-FORTRAN
-      
+      - build-and-test-Makefile-matrixMult-FORTRAN
 jobs:
   build-and-test-CMake-matrixMult-FORTRAN:
     working_directory: ~/CMake/matrixMult/FORTRAN/
@@ -19,14 +19,29 @@ jobs:
           command: pwd
       - run: 
           name: create build directory for cmake
-          command: mkdir build && cd build 
+          command: mkdir build 
       - run: 
           name: cmake
-          command: cmake ..
+          command: cd build && cmake ..
       - run: 
           name: make
           command: make
       - run:
           name: test binary
           command: echo Test && ./matrix_mult
-   
+          
+  build-and-test-Makefile-matrixMult-FORTRAN:
+    working_directory: ~/Makefile/matrixMult/FORTRAN/
+    executor: executor
+    steps:
+      - checkout
+      - run:
+          name: Check directory
+          command: pwd
+      - run: 
+          name: build
+          command: make
+      - run:
+          name: test binary
+          command: echo Test && ./matrix_mult
+  

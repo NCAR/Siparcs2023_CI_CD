@@ -10,13 +10,12 @@ workflows:
       - build-and-test-Makefile-matrixMult-FORTRAN
 jobs:
   build-and-test-CMake-matrixMult-FORTRAN:
-    working_directory: ~/CMake/matrixMult/FORTRAN/
     executor: executor
     steps:
       - checkout
       - run:
           name: Check directory
-          command: pwd
+          command: cd CMake/matrixMult/FORTRAN/ && pwd
       - run: 
           name: create build directory for cmake
           command: mkdir build 
@@ -31,13 +30,12 @@ jobs:
           command: echo Test && ./matrix_mult
           
   build-and-test-Makefile-matrixMult-FORTRAN:
-    working_directory: ~/Makefile/matrixMult/FORTRAN/
     executor: executor
     steps:
       - checkout
       - run:
           name: Check directory
-          command: pwd
+          command: cd Makefile/matrixMult/FORTRAN/ && pwd
       - run: 
           name: build
           command: make

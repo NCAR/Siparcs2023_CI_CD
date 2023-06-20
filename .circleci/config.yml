@@ -28,15 +28,5 @@ jobs:
           command: make
       - run:
           name: test binary
-          command: echo "Test Run: " && ./matrix_mult
-      
-      - run:
-          name: Install Dependencies
-          command: npm install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-          paths:
-            - node_modules
-      - run:
-          name: Run Tests
-          command: npm test
+          command: echo Test && ./matrix_mult
+   

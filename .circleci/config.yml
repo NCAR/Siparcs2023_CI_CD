@@ -13,33 +13,23 @@ jobs:
     executor: executor
     steps:
       - checkout
-      - run:
-          name: Check directory
-          command: cd CMake/matrixMult/FORTRAN/ && pwd
       - run: 
-          name: create build directory for cmake
-          command: mkdir build 
-      - run: 
-          name: cmake
-          command: cd build && cmake ..
-      - run: 
-          name: make
-          command: make
-      - run:
-          name: test binary
-          command: echo Test && ./matrix_mult
+          name: Check directory and build
+          command: |
+            cd CMake/matrixMult/FORTRAN/ && pwd && mkdir buil
+            mkdir build 
+            cd build && cmake ..
+            make
+            echo Test && ./matrix_mult
           
   build-and-test-Makefile-matrixMult-FORTRAN:
     executor: executor
     steps:
       - checkout
       - run:
-          name: Check directory
-          command: cd Makefile/matrixMult/FORTRAN/ && pwd
-      - run: 
-          name: build
-          command: make
-      - run:
-          name: test binary
-          command: echo Test && ./matrix_mult
+          name: Check directory and build
+          command: |
+            cd Makefile/matrixMult/FORTRAN/ && pwd
+            make
+            echo Test && ./matrix_mult
   

@@ -8,6 +8,7 @@ workflows:
     jobs:
       - build-and-test-CMake-matrixMult-FORTRAN
       - build-and-test-Makefile-matrixMult-FORTRAN
+      - build-and-test-Autoconfig-matrixMult-FORTRAN
 jobs:
   build-and-test-CMake-matrixMult-FORTRAN:
     executor: executor
@@ -32,4 +33,17 @@ jobs:
             cd Makefile/matrixMult/FORTRAN/ && pwd
             make
             echo Test && ./matrix_mult
+            
+  build-and-test-Autoconfig-matrixMult-FORTRAN:
+    executor: executor
+    steps:
+      - checkout
+      - run:
+          name: Check directory and build
+          command: |
+            cd Autoconfig/matrixMult/FORTRAN/ 
+            pwd && autoconf
+            ./configure && make
+            echo Test && ./matrix_mult
+    
   

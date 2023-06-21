@@ -15,7 +15,7 @@ jobs:
   Makefile:
     runs-on: ubuntu-latest
     container:
-      image: nvcr.io/nvidia/nvhpc:23.5-devel-cuda12.1-ubuntu22.04
+      image: haniyeka/cuda_mpi_container:5.0
     steps:
     - uses: actions/checkout@v3
       

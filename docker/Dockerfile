@@ -10,3 +10,6 @@ RUN apt-get update && apt-get install -y \
     autoconf \
     && rm -rf /var/lib/apt/lists/*
 
+#include path for libopen-rte.so.40 for openmpi
+RUN export LD_LIBRARY_PATH=/opt/nvidia/hpc_sdk/Linux_x86_64/23.5/comm_libs/12.1/openmpi4/openmpi-4.1.5/lib/:$LD_LIBRARY_PATH
+

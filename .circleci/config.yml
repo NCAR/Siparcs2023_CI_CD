@@ -1,8 +1,8 @@
 version: 2.1
-#executors:
-  #executor:
-   # docker:
-    #  - image: nvcr.io/nvidia/nvhpc:23.5-devel-cuda12.1-ubuntu22.04
+executors:
+  executor:
+    docker:
+      - image: nvcr.io/nvidia/nvhpc:23.5-devel-cuda12.1-ubuntu22.04
 workflows:
   build-and-test:
     jobs:
@@ -11,9 +11,7 @@ workflows:
       - build-and-test-Autoconfig-matrixMult-FORTRAN
 jobs:
   build-and-test-CMake-matrixMult-FORTRAN:
-    machine:
-      image: ubuntu-1604-cuda-10.1:201909-23
-    resource_class: gpu.nvidia.small
+    executor: executor
     steps:
       - checkout
       - run: 
@@ -26,9 +24,7 @@ jobs:
             echo Test && ./matrix_mult
           
   build-and-test-Makefile-matrixMult-FORTRAN:
-    machine:
-      image: ubuntu-1604-cuda-10.1:201909-23
-    resource_class: gpu.nvidia.small
+    executor: executor
     steps:
       - checkout
       - run:
@@ -39,9 +35,7 @@ jobs:
             echo Test && ./matrix_mult
             
   build-and-test-Autoconfig-matrixMult-FORTRAN:
-    machine:
-      image: ubuntu-1604-cuda-10.1:201909-23
-    resource_class: gpu.nvidia.small
+    executor: executor
     steps:
       - checkout
       - run:

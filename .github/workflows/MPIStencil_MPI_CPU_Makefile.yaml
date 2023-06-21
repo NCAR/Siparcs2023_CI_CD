@@ -21,6 +21,7 @@ jobs:
 
     - name: Navigate to directory and make
       run: |
+        echo $LD_LIBRARY_PATH
         cd Makefile/MPIStencil/MPI/CPU/
         pwd
         make

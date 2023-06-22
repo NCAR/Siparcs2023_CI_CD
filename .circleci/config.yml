@@ -49,8 +49,7 @@ version: 2.1
   
 jobs:
   build:
-    docker:
-      - image: nvcr.io/nvidia/nvhpc:23.5-devel-cuda12.1-ubuntu22.04
+    
     resource_class: gpu.nvidia.small
     steps:
       - run: nvidia-smi

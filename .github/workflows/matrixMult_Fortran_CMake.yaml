@@ -15,7 +15,7 @@ on:
 
 jobs:
   Makefile:
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: [self-hosted, Linux, X64, rescale-dom]
     container:
       image: haniyeka/cuda_mpi_container:5.0
     steps:

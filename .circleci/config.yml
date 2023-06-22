@@ -1,49 +1,56 @@
 version: 2.1
-executors:
-  executor:
-    docker:
-      - image: nvcr.io/nvidia/nvhpc:23.5-devel-cuda12.1-ubuntu22.04
-workflows:
-  build-and-test:
-    jobs:
-      - build-and-test-CMake-matrixMult-FORTRAN
-      - build-and-test-Makefile-matrixMult-FORTRAN
-      - build-and-test-Autoconfig-matrixMult-FORTRAN
-jobs:
-  build-and-test-CMake-matrixMult-FORTRAN:
-    executor: executor
-    steps:
-      - checkout
-      - run: 
-          name: Check directory and build
-          command: |
-            cd CMake/matrixMult/FORTRAN/ && pwd && mkdir buil
-            mkdir build 
-            cd build && cmake ..
-            make
-            echo Test && ./matrix_mult
+#executors:
+#  executor:
+#    docker:
+#      - image: nvcr.io/nvidia/nvhpc:23.5-devel-cuda12.1-ubuntu22.04
+#workflows:
+ # build-and-test:
+  #  jobs:
+   #   - build-and-test-CMake-matrixMult-FORTRAN
+    #  - build-and-test-Makefile-matrixMult-FORTRAN
+     # - build-and-test-Autoconfig-matrixMult-FORTRAN
+#jobs:
+ # build-and-test-CMake-matrixMult-FORTRAN:
+  #  executor: executor
+   # steps:
+    #  - checkout
+     # - run: 
+      #    name: Check directory and build
+       #   command: |
+        #    cd CMake/matrixMult/FORTRAN/ && pwd && mkdir buil
+         #   mkdir build 
+          #  cd build && cmake ..
+           # make
+            #echo Test && ./matrix_mult
           
-  build-and-test-Makefile-matrixMult-FORTRAN:
-    executor: executor
-    steps:
-      - checkout
-      - run:
-          name: Check directory and build
-          command: |
-            cd Makefile/matrixMult/FORTRAN/ && pwd
-            make
-            echo Test && ./matrix_mult
+#  build-and-test-Makefile-matrixMult-FORTRAN:
+ #   executor: executor
+  #  steps:
+   #   - checkout
+    #  - run:
+     #     name: Check directory and build
+      #    command: |
+       #     cd Makefile/matrixMult/FORTRAN/ && pwd
+        #    make
+         #   echo Test && ./matrix_mult
             
-  build-and-test-Autoconfig-matrixMult-FORTRAN:
-    executor: executor
-    steps:
-      - checkout
-      - run:
-          name: Check directory and build
-          command: |
-            cd Autoconfig/matrixMult/FORTRAN/ 
-            pwd && autoconf
-            ./configure && make
-            echo Test && ./matrix_mult
+#  build-and-test-Autoconfig-matrixMult-FORTRAN:
+ #   executor: executor
+  #  steps:
+   #   - checkout
+    #  - run:
+     #     name: Check directory and build
+      #    command: |
+       #     cd Autoconfig/matrixMult/FORTRAN/ 
+        #    pwd && autoconf
+         #   ./configure && make
+          #  echo Test && ./matrix_mult
     
   
+jobs:
+  build:
+    machine:
+      image: ubuntu-1604-cuda-10.1:201909-23
+    resource_class: gpu.nvidia.small
+    steps:
+      - run: nvidia-smi

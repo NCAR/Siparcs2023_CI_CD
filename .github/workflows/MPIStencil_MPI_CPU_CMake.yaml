@@ -28,5 +28,5 @@ jobs:
         cmake ..
         make
         echo "Test run:"
-        ./MPIStensil
+        ./MPIStencil
 

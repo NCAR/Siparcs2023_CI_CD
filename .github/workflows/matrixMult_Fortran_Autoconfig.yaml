@@ -17,7 +17,7 @@ jobs:
   Makefile:
     runs-on: [self-hosted, Linux, X64, hny-laptop]
     container:
-      image: haniyeka/cuda_mpi_container:5.0
+      image: haniyeka/cuda_mpi_container:6.0
     steps:
     - uses: actions/checkout@v3
     

@@ -1,23 +1,28 @@
 #Compiler
-F90=gfortran
+CC=nvc++
 
 #Compiler flags
-FFLAGS= -O3 -Wall -free
+CFLAGS= -g -O3 -Wall -std=c++11
+
+ACCFLAGS= -acc -gpu=cc60,cc70,managed -Minfo=all -I${NVHPC_ROOT_PATH}/include
 
 # final executable file
 BINARY= matrix_mult
 # name of object files
-OBJECTS= matrix_mult.o
+OBJECTS= main.o common.o functions.o matrix_mult.o
 # name of the code files we 
-FFILES= matrix_mult.f90
+CFILES= main.cpp common.cpp functions.cpp matrix_mult.cc
 
 all: $(BINARY)
 
 $(BINARY): $(OBJECTS)
-	$(F90) -o $(BINARY) $(OBJECTS) 
+	$(CC) -o $(BINARY) $(OBJECTS) $(ACCFLAGS) 
 
-$(OBJECTS): $(FFILES)
-	$(F90) -c $(FFLAGS) $<
+%.o: %.cpp 
+	$(CC) -c $(CFLAGS) $(ACCFLAGS) $<
+
+%.o: $.cc
+	$(CC) -c $(CFLAGS) $(ACCFLAGS) $<
 
 clean: 
 	rm *.o $(BINARY)

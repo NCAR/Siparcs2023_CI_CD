@@ -1,0 +1,24 @@
+#Compiler
+F90=@FC@
+
+#Compiler flags
+FCFLAGS= @FCFLAGS@
+ACCFLAGS= @ACCFLAGS@
+
+# final executable file
+BINARY= matrix_mult
+# name of object files
+OBJECTS= matrix_mult.o
+# name of the code files we 
+FFILES= matrix_mult.f90
+
+all: $(BINARY)
+
+$(BINARY): $(OBJECTS)
+	$(F90) -o $(BINARY) $(OBJECTS) $(FCFLAGS) $(ACCFLAGS) 
+
+$(OBJECTS): $(FFILES)
+	$(F90) -c $(FCFLAGS) $(ACCFLAGS) $<
+
+clean: 
+	rm -r *.o $(BINARY) Makefile configure config.* autom4te.cache

@@ -1,0 +1,26 @@
+#Compiler
+CC=@CC@
+CUDACC=@CUDACC@
+
+#Compiler flags
+CFLAGS= @CFLAGS@
+CUDAFLAGS= @CUDAFLAGS@
+
+# final executable file
+BINARY= matrix_mult
+# name of object files
+OBJECTS= main.o common.o functions.o matrixMul.o
+ 
+all: $(BINARY)
+
+$(BINARY): $(OBJECTS)
+	$(CC) -o $(BINARY) $(OBJECTS) $(CUDAFLAGS) $(CFLAGS) 
+
+%.o: %.cpp 
+	$(CC) -c $(CFLAGS) $<
+
+%.o: %.cu
+	$(CUDACC) -c $(CUDAFLAGS) $<
+
+clean: 
+	rm -r *.o $(BINARY) configure config.* autom4te.cache Makefile 

@@ -1,0 +1,60 @@
+name: MPIStencil_MPI_CPU_Makefile
+
+on:
+  push:
+    branches:
+      - main
+    paths: 
+      - Makefile/MPIStencil/MPI/CPU/**
+      - Autoconfig/MPIStencil/MPI/CPU/**
+      - CMake/MPIStencil/MPI/CPU/**
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  Build_Makefile:
+    runs-on: [self-hosted, Linux, X64, casper]
+      #container:
+      #image: haniyeka/cuda_mpi_container:6.0
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Navigate to directory and buld with make
+      run: |
+        echo $LD_LIBRARY_PATH
+        cd Makefile/MPIStencil/MPI/CPU/
+        pwd
+        make
+        echo "Test run:"
+        ./MPIStencil
+  
+  Build_Autoconfig:
+    runs-on: [self-hosted, Linux, X64, casper]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Navigate to directory and build with autoconfig
+      run: |
+        cd Autoconfig/MPIStencil/MPI/CPU/
+        pwd
+        autoconf
+        ./configure
+        make
+        echo "Test run:"
+        ./MPIStencil
+
+  Build_CMake:
+    runs-on: [self-hosted, Linux, X64, casper]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Navigate to directory and build with cmake
+      run: |
+        cd CMake/MPIStencil/MPI/CPU/
+        pwd
+        mkdir build
+        cd build
+        cmake ..
+        make
+        echo "Test run:"
+        ./MPIStencil

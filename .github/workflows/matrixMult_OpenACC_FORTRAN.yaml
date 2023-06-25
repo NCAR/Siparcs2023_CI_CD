@@ -1,4 +1,4 @@
-name: matrixMult_OpenACC_Fortran_Autoconfig
+name: matrixMult_OpenACC_Fortran_Makefile
 
 on:
   schedule:
@@ -7,6 +7,7 @@ on:
     branches: 
       - main
     paths: 
+      - Makefile/matrixMult/OpenACC_FORTRAN/**
       - Autoconfig/matrixMult/OpenACC_FORTRAN/** 
   pull_request:
     branches:
@@ -14,16 +15,29 @@ on:
   workflow_dispatch:
   
 jobs:
-  Build:
+  Build_Makefile:
     runs-on: [self-hosted, Linux, X64, casper]
     #container:
     #  image: nvcr.io/nvidia/nvhpc:23.5-devel-cuda12.1-ubuntu22.04
     steps:
     - name: checkout
       uses: actions/checkout@v3        
-    - name: Navigate to directory and make
+    - name: Navigate to directory and build with make
       run: |
-        cd Autoconfig/matrixMult/OpenACC_FORTRAN/ 
+        cd Makefile/matrixMult/OpenACC_FORTRAN/ 
+        pwd
+        make
+        echo "Test Run:"
+        ./matrix_mult
+  
+  Build_Autoconf:
+    runs-on: [self-hosted, Linux, X64, casper]
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+    - name: Navigate to directory and build with autoconfig
+      run: |
+        cd Autoconfig/matrixMult/OpenACC_FORTRAN/
         pwd
         autoconf
         ./configure

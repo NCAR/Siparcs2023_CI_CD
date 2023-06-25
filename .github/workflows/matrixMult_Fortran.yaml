@@ -1,0 +1,61 @@
+name: matrixMult_Fortran_Makefile
+
+on:
+  schedule:
+    - cron: '0 0 * * MON' 
+  push:
+    branches: 
+      - main
+    paths: 
+      - Makefile/matrixMult/FORTRAN/** 
+      - CMake/matrixMult/FORTRAN/**
+      - Autoconfig/matrixMult/FORTRAN/**
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  Build_Makefile:
+    runs-on: [self-hosted, Linux, X64, casper]
+      #container:
+      #image: haniyeka/cuda_mpi_container:6.0
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Navigate to directory and build with make
+      run: |
+        cd Makefile/matrixMult/FORTRAN/ 
+        pwd
+        make
+        echo "Test Run:"
+        ./matrix_mult
+
+  Build_Autoconfig:
+    runs-on: [self-hosted, Linux, X64, casper]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Navigate to directory and build with Autoconfig
+      run: | 
+        cd Autoconfig/matrixMult/FORTRAN/
+        pwd
+        autoconf
+        ./configure
+        make
+        echo "Test Run:"
+        ./matrix_mult
+
+  Build_CMake:
+    runs-on: [self-hosted, Linux, X64, casper]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Navigate to directory and build with cmake
+      run: |
+        cd CMake/matrixMult/FORTRAN/
+        pwd
+        mkdir build
+        cd build
+        cmake ..
+        make
+        echo "Test Run:"
+        ./matrix_mult

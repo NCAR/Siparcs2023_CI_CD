@@ -1,4 +1,4 @@
-name: matrixMult_OpenACC_Makefile
+name: matrixMult_OpenACC
 
 on:
   schedule:

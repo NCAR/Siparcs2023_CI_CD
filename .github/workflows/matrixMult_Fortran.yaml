@@ -1,4 +1,4 @@
-name: matrixMult_Fortran_Makefile
+name: matrixMult_Fortran
 
 on:
   schedule:

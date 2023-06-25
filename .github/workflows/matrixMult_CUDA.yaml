@@ -1,4 +1,4 @@
-name: matrixMult_CUDA_Makefile
+name: matrixMult_CUDA
 
 on:
   schedule:

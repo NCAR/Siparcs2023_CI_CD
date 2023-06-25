@@ -1,4 +1,4 @@
-name: MPIStencil_MPI_CPU_Makefile
+name: MPIStencil_MPI_CPU
 
 on:
   push:

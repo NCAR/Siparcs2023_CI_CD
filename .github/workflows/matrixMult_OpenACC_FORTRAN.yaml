@@ -1,4 +1,4 @@
-name: matrixMult_OpenACC_Fortran_Makefile
+name: matrixMult_OpenACC_Fortran
 
 on:
   schedule:

@@ -8,7 +8,8 @@ on:
       - main
     paths: 
       - Makefile/matrixMult/OpenACC_FORTRAN/**
-      - Autoconfig/matrixMult/OpenACC_FORTRAN/** 
+      - Autoconfig/matrixMult/OpenACC_FORTRAN/**
+      - CMake/matrixMult/OpenACC_FORTRAN/** 
   pull_request:
     branches:
       - main
@@ -41,6 +42,21 @@ jobs:
         pwd
         autoconf
         ./configure
+        make
+        echo "Test Run:"
+        ./matrix_mult
+
+  Build_CMake:
+    runs-on: [self-hosted, Linux, X64, casper]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Navigate to directory and build with cmake
+      run: |
+        cd CMake/matrixMult/OpenACC_FORTRAN/
+        pwd
+        mkdir build
+        cd build
+        cmake ..
         make
         echo "Test Run:"
         ./matrix_mult

@@ -45,3 +45,18 @@ jobs:
         make
         echo "Test Run:"
         ./matrix_mult
+
+  Build_CMake:
+    runs-on: [self-hosted, Linux, X64, casper]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Navigate to directory and build with cmake
+      run: |
+        cd CMake/matrixMult/OpenACC/
+        pwd
+        mkdir build
+        cd build
+        cmake ..
+        make
+        echo "Test Run:"
+        ./matrix_mult

@@ -1,0 +1,60 @@
+name: MPIStencil_MPI_oneThread
+
+on:
+  push:
+    branches:
+      - main
+    paths: 
+      - Makefile/MPIStencil/oneThread/**
+      - Autoconfig/MPIStencil/oneThread/**
+      - CMake/MPIStencil/oneThread/**
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  Build_Makefile:
+    runs-on: [self-hosted, Linux, X64, casper]
+      #container:
+      #image: haniyeka/cuda_mpi_container:6.0
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Navigate to directory and buld with make
+      run: |
+        echo $LD_LIBRARY_PATH
+        cd Makefile/MPIStencil/oneThread/
+        pwd
+        make
+        echo "Test run:"
+        ./MPIStencil
+  
+  Build_Autoconfig:
+    runs-on: [self-hosted, Linux, X64, casper]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Navigate to directory and build with autoconfig
+      run: |
+        cd Autoconfig/MPIStencil/oneThread/
+        pwd
+        autoconf
+        ./configure
+        make
+        echo "Test run:"
+        ./MPIStencil
+
+  Build_CMake:
+    runs-on: [self-hosted, Linux, X64, casper]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Navigate to directory and build with cmake
+      run: |
+        cd CMake/MPIStencil/oneThread/
+        pwd
+        mkdir build
+        cd build
+        cmake ..
+        make
+        echo "Test run:"
+        ./MPIStencil

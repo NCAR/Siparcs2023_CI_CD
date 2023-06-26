@@ -1,0 +1,60 @@
+name: MPIStencil_MPI_OpenACC
+
+on:
+  push:
+    branches:
+      - main
+    paths: 
+      - Makefile/MPIStencil/MPI/OpenACC/**
+      - Autoconfig/MPIStencil/MPI/OpenACC/**
+      - CMake/MPIStencil/MPI/OpenACC/**
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  Build_Makefile:
+    runs-on: [self-hosted, Linux, X64, casper]
+      #container:
+      #image: haniyeka/cuda_mpi_container:6.0
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Navigate to directory and buld with make
+      run: |
+        echo $LD_LIBRARY_PATH
+        cd Makefile/MPIStencil/MPI/OpenACC/
+        pwd
+        make
+        echo "Test run:"
+        ./MPIStencil
+  
+  Build_Autoconfig:
+    runs-on: [self-hosted, Linux, X64, casper]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Navigate to directory and build with autoconfig
+      run: |
+        cd Autoconfig/MPIStencil/MPI/OpenACC/
+        pwd
+        autoconf
+        ./configure
+        make
+        echo "Test run:"
+        ./MPIStencil
+
+  Build_CMake:
+    runs-on: [self-hosted, Linux, X64, casper]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Navigate to directory and build with cmake
+      run: |
+        cd CMake/MPIStencil/MPI/OpenACC/
+        pwd
+        mkdir build
+        cd build
+        cmake ..
+        make
+        echo "Test run:"
+        ./MPIStencil

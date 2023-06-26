@@ -16,4 +16,4 @@ $(BINARY): $(OBJECTS)
 	$(MPICC) -c $(CFLAGS) $<
 
 clean: 
-	rm *.o $(BINARY)
+	rm -r *.o $(BINARY) autom4te.cache config.* configure Makefile

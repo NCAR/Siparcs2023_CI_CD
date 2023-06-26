@@ -1,0 +1,23 @@
+#compiler
+CC=@CC@
+
+#compiler flag
+CFLAGS= @CFLAGS@
+ACCFLAGS= @ACCFLAGS@
+
+OBJECTS= common.o functions.o main.o stencil.cc
+BINARY= MPIStencil
+
+all: $(BINARY)
+
+$(BINARY): $(OBJECTS)
+	$(CC) -o $(BINARY) $(OBJECTS) $(CFLAGS) $(ACCFLAGS)
+
+%.o: %.cpp
+	$(CC) -c $(CFLAGS) $(ACCFLAGS) $<
+
+%.o: $.cc
+	$(CC) -c $(CFLAGS) $(ACCFLAGS) $<
+
+clean: 
+	rm -r *.o $(BINARY) configure Makefile config.* autom4te.cache

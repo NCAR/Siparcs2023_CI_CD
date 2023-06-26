@@ -1,0 +1,23 @@
+#compiler
+MPICC=@MPICC@
+
+#compiler flag
+CFLAGS= @CFLAGS@
+ACCFLAGS= @ACCFLAGS@
+
+OBJECTS= common.o main.o stencil.o
+BINARY= MPIStencil
+
+all: $(BINARY)
+
+$(BINARY): $(OBJECTS)
+	$(MPICC) -o $(BINARY) $(OBJECTS) $(CFLAGS) $(ACCFLAGS)
+
+%.o: %.cpp
+	$(MPICC) -c $(CFLAGS) $<
+
+%.o: %.cc
+	$(MPICC) -c $(CFLAGS) $(ACCFLAGS) $<
+
+clean: 
+	rm -r autom4te.cache  *.o $(BINARY) config.* configure Makefile

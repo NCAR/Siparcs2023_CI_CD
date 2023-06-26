@@ -11,8 +11,8 @@ if test "x$CUDACC" = xno; then
 fi
 
 
-AC_ARG_VAR([CFLAGS], ["-g -O3 -Wall -std=c++11"])
-AC_ARG_VAR([CUDAFLAGS], ["-g -std=c++11 -O3 -I[$]NVHPC_ROOT_PATH/include"])
+CFLAGS="-g -O3 -Wall -std=c++11"
+CUDAFLAGS="-g -std=c++11 -O3 -I[$]NVHPC_ROOT_PATH/include"
 
 AC_SUBST([CC])
 AC_SUBST([CUDACC])

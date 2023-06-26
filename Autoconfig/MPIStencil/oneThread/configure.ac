@@ -1,5 +1,5 @@
-AC_INIT([multrixMult], [0.1])
-AC_MSG_NOTICE([Building C++ ACC version of matrix multiplication])
+AC_INIT(MPIStencil, version-0.1)
+AC_MSG_NOTICE([Building MPI CPU version of MPIStencil])
 
 AC_PATH_PROG([CC], [nvc++], [no])
 if test "x$CC" = xno; then
@@ -7,7 +7,7 @@ if test "x$CC" = xno; then
 fi
 
 CFLAGS="-g -O3 -Wall -std=c++11"
-ACCFLAGS="-acc -gpu=cc60,cc70,managed -Minfo=all -I${NVHPC_ROOT_PATH}/include"
+ACCFLAGS="-acc -gpu=cc60,cc70,managed -Minfo=all -I${NCAR_ROOT_NVHPC}/include"
 
 AC_SUBST([CC])
 AC_SUBST([CFLAGS])

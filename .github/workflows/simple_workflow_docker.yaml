@@ -19,7 +19,7 @@ jobs:
   Build_Makefile:
     runs-on: [self-hosted, Linux, X64, casper]
     container:
-      image: gcc:latest
+      image: nvcr.io/nvidia/nvhpc:23.5-devel-cuda_multi-ubuntu22.04
     steps:
     - uses: actions/checkout@v3
     
@@ -33,7 +33,7 @@ jobs:
   Build_Autoconfig:
     runs-on: [self-hosted, Linux, X64, casper]
     container:
-      image: gcc:latest
+      image: nvcr.io/nvidia/nvhpc:23.5-devel-cuda_multi-ubuntu22.04
     steps:
     - uses: actions/checkout@v3
     - name: Navigate to directory and build with Autoconfig
@@ -48,7 +48,7 @@ jobs:
   Build_CMake:
     runs-on: [self-hosted, Linux, X64, casper]
     container:
-      image: gcc:latest
+      image: nvcr.io/nvidia/nvhpc:23.5-devel-cuda_multi-ubuntu22.04
     steps:
     - uses: actions/checkout@v3
     - name: Navigate to directory and build with cmake

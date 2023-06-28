@@ -1,4 +1,4 @@
-name: matrixMult_Fortran
+name: simple_workflow_docker
 
 on:
   schedule:

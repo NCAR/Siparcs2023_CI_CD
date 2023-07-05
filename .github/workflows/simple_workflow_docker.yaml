@@ -1,4 +1,4 @@
-name: simple_workflow_docker
+name: simple_workflow_singularity
 
 on:
   schedule:

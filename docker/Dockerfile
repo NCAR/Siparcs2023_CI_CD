@@ -1,3 +1,9 @@
+# Author: Haniye Kashgarani
+# Affiliation: University of Wyoming
+# ORCID: 0000-0001-6059-1920
+# Date: 2023-07-24T19:51:32+00:00
+# Github: haniyeka
+
 # Start from the CUDA image
 FROM nvcr.io/nvidia/nvhpc:23.5-devel-cuda12.1-ubuntu22.04
 

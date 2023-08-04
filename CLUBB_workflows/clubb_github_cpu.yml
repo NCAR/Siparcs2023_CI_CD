@@ -1,0 +1,45 @@
+# Author: Haniye Kashgarani
+# Affiliation: University of Wyoming
+# ORCID: 0000-0001-6059-1920
+# Date: 2023-07-24T7:37:17+00:00
+# Github: haniyeka
+
+name: clubb_github_cpu
+
+on:
+  schedule:
+    - cron: '0 0 1 * *' #Runs once a month
+	# - cron: '0 0 * * MON' #Runs once a week
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  Build_Makefile:
+    runs-on: ubuntu-latest
+    container:
+      image: haniyeka/clubb_container:4.0 #change this part to the location of docker image
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Navigate to directory and build with make
+      run: |
+        echo $LD_LIBRARY_PATH
+        echo $GFORTRAN_NETCDF_FORTRAN
+        echo "Current directory:" 
+        echo $(pwd)
+        cd ./compile/
+        echo "Test build..."
+        ./compile.bash -c ./config/linux_x86_64_gfortran.bash
+        echo "Build successful!"    
+    - name: Run Tests
+      run: |
+        echo "Running tests..."
+        cd ../run_scripts/
+        ./run_scm_all.bash
+        echo "Every test passed successfully."
+

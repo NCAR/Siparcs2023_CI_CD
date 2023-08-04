@@ -1,0 +1,41 @@
+# Author: Haniye Kashgarani
+# Affiliation: University of Wyoming
+# ORCID: 0000-0001-6059-1920
+# Date: 2023-07-26T14:53:37+00:00
+# Github: haniyeka
+
+name: mpas_github_cpu
+
+on:
+  schedule:
+    - cron: '0 0 1 * *' #Runs once a month
+    # - cron: '0 0 * * MON' #Runs once a week
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  Build_Makefile:
+    runs-on: ubuntu-latest
+    container:
+      image: haniyeka/carl_fftw_heffte:1.0 #change this part to the location of docker image
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Navigate to directory and build with make
+      run: |
+        echo $LD_LIBRARY_PATH
+        echo "Current directory:"
+        echo $(pwd)
+        echo "Test build..."
+        make clean CORE=atmosphere
+        make pgi CORE=atmosphere PRECISION=single USE_PIO2=true
+        echo "Build successful"
+    - name: Run Tests
+      run: |
+        #echo "Running tests..."
+        #echo "Every test passed successfully."

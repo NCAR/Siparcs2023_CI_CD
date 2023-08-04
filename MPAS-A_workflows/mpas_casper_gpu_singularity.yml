@@ -1,0 +1,53 @@
+# Author: Haniye Kashgarani
+# Affiliation: University of Wyoming
+# ORCID: 0000-0001-6059-1920
+# Date: 2023-07-26T13:06:12+00:00
+# Github: haniyeka
+
+name: mpas_casper_gpu_singularity
+
+on:
+  schedule:
+    - cron: '0 0 1 * *' #Runs once a month
+    # - cron: '0 0 * * MON' #Runs once a week
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  Build_Makefile:
+    runs-on: [self-hosted, Linux, X64, casper]
+    env:
+      IMAGE_PATH: /glade/work/hkashgar/casper_MPAS/selene_latest.sif
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Ensure we are not in login mode
+      run: |
+        # on caster or any pbs system, $PBS_ENVIRONMENT will give some informations about the job
+        if [[ $PBS_ENVIRONMENT != "PBS_INTERACTIVE" && $PBS_ENVIRONMENT != "PBS_BATCH" ]]; then
+          echo "::error::Workflow is running in login mode"
+          exit 1
+        else
+          echo "Workflow is running in $PBS_ENVIRONMENT mode!"
+          echo JobID = $PBS_JOBID
+        fi
+
+    - name: Navigate to directory and build with make
+      run: |
+        echo $IMAGE_PATH
+        module load singularity
+        singularity exec --nv --bind /glade:/glade $IMAGE_PATH /bin/bash -c "echo \$LD_LIBRARY_PATH \
+          && echo \"Current directory:\" \
+          && echo \$(pwd) \
+          && echo \"Test build:\" \
+          && make clean CORE=atmosphere \
+          && make pgi CORE=atmosphere PRECISION=single OPENACC=true USE_PIO2=true \
+          && echo \"Build successful\"
+          #&& echo \"Running tests\" \
+          #Test code ...
+          #&& echo \"Every test passed successfully.\""

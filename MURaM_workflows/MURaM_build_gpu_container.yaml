@@ -1,0 +1,151 @@
+# Author: Haniye Kashgarani
+# Affiliation: University of Wyoming
+# ORCID: 0000-0001-6059-1920
+# Date: 2023-07-24T19:51:32+00:00
+# Github: haniyeka
+
+
+name: MURaM_Build_gpu_container
+
+on:
+  #schedule:
+    #runs the workflow every Monday at midnight.
+  #  - cron: '0 0 * * MON' 
+  push:
+    branches:
+      - main
+    paths: 
+      - ./
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+ 
+    
+jobs:
+  Build:
+    runs-on: [self-hosted, Linux, X64, casper]
+    # NOTE: I commented this part because we cannot use env variables when defining env variables. 
+    # see: https://brandur.org/fragments/github-actions-env-vars-in-env-vars and https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
+    #env:
+      #MURaM_HOME_DIR: /glade/work/$USER/muram_runners/$RUNNER_NAME/_work/MURaM_main/MURaM_main
+      #FFTW3_HOME: /glade/u/home/$USER/muram_lib/fftw3
+      #HEFFTE_HOME: /glade/u/home/$USER/muram_lib/heffte
+      #IMAGE_PATH: /glade/u/home/$USER/selene_latest.sif
+      
+    steps:
+    - name: Set environmental variables
+      run: | 
+        # used the method in: https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
+        # NOTE: We cannot set and use the variable in the same step -- it will be empty
+        echo "IMAGE_PATH=/glade/u/home/$USER/selene_latest.sif" >> $GITHUB_ENV
+        echo "MURaM_HOME_DIR=/glade/work/$USER/muram_runners/$RUNNER_NAME/_work/MURaM_main/MURaM_main" >> $GITHUB_ENV
+        echo "FFTW3_HOME=/glade/u/home/$USER/muram_lib/fftw3" >> $GITHUB_ENV
+        echo "HEFFTE_HOME=/glade/u/home/$USER/muram_lib/heffte" >> $GITHUB_ENV
+    - name: Ensure we are not in login mode
+      run: |
+        # on caster or any pbs system, $PBS_ENVIRONMENT will give some informations about the job
+        if [[ $PBS_ENVIRONMENT != "PBS_INTERACTIVE" && $PBS_ENVIRONMENT != "PBS_BATCH" ]]; then
+          echo "::error::Workflow is running in login mode"
+          exit 1
+        else
+          echo "Workflow is running in $PBS_ENVIRONMENT mode!"
+          echo JobID = $PBS_JOBID
+        fi
+    - uses: actions/checkout@v3
+    - name: Ensure FFTW and HEFFTE Installation
+      run: |
+        ################## Check and Install FFTW3-mpi and Heffte ##################
+        
+        #echo "Checking FFTW..."
+        #module_name_fftw="fftw3-mpi"
+        #module_load_status_fftw=$(module load $module_name_fftw 2>&1)
+        #module_name_heffte="heffte"
+        #module_load_status_heffte=$(module load $module_name_heffte 2>&1)
+
+        #notfound_errorMsg="Lmod has detected the following error: The following module(s) are unknown:"
+        #loading_errorMsg="Lmod has detected the following error: These module(s) or extension(s) exist but cannot be loaded as requested:"
+        
+        #if [[ $module_load_status_fftw == "$notfound_errorMsg"* || $module_load_status_heffte == "$notfound_errorMsg"* ]]; then
+        #  echo $module_load_status_fftw
+        #  echo $module_load_status_heffte
+          
+        #  echo "Module is not available, we're going to install it"
+          
+          ################## Install module here ##################
+          #The casper_install_fftw_heffte script install both fftw3 and heffte
+        #  cd casper && chmod +x casper_install_fftw_heffte.sh && ./casper_install_fftw_heffte.sh
+        #  echo "Move them to suitable location:"
+          #mv ./fftw/* ../lib/fftw3/ && mv ./heffte/* ../lib/heffte/
+          #rmdir ./fftw ./heffte
+          
+        #  echo "See what exist in ../lib/fftw3"
+        #  ls ../lib/fftw3
+
+        #  echo "See what exist in ../lib/heffte"
+        #  ls ../lib/heffte
+        #  pwd
+       
+        # ################## Should correct this part, since fftw3-mpi load needs some dependecies that doesn't match heffte dependencies ##################
+        #elif [[ $module_load_status == "$loading_errorMsg"* ]]; then
+        
+        #  echo $module_load_status
+        #  echo "Changing loading method..."
+        #  module_info=$(module spider $module_name 2>&1)
+        #  version=$(echo "$module_info" | grep -oP 'fftw3-mpi/\K[^ ]*' | head -n 1)
+        #  module_load_status=$(module load "$module_name/$version" 2>&1)
+        #  if [[ $module_load_status == "$loading_errorMsg"* ]]; then
+        #    dependencies=$(module spider $module_name/$version 2>&1 | awk '/You will need to load all module/,0' | tail -n +2 | head -n -2)
+
+        # else
+         # echo "Module $module_name is available"
+          #  # If module is needed in the script, load it
+           # module load $module_name
+        # fi
+        
+            
+    - name: Updating the Path References in Make_defs File
+      run: |
+        echo "replace the suitable make_def for casper..." 
+        cp casper/Make_defs_casper ./Make_defs
+        echo "see the paths inside: "
+        head -n 10 Make_defs
+        
+        echo "correct the path ..."
+        while IFS= read -r line; do
+          if [[ $line == MURaM_HOME_DIR* ]]; then
+            echo -e "MURaM_HOME_DIR = $MURaM_HOME_DIR"
+          elif [[ $line == FFTW3_HOME* ]]; then
+            echo -e "FFTW3_HOME = $FFTW3_HOME"
+          elif [[ $line == HEFFTE_HOME* ]]; then
+            echo -e "HEFFTE_HOME = $HEFFTE_HOME"
+          elif [[ $line == CUDA_HOME* ]]; then
+            echo -e "CUDA_HOME = $CUDA_HOME"
+          else
+            echo -e "$line"
+          fi
+        done < Make_defs > temp_file && mv temp_file Make_defs
+        
+        echo "see new paths inside: "
+        #head -n 10 Make_defs
+        cat Make_defs
+    - name: Build Muram
+      run: |
+        # The image is obtained from Carl's docker container. 
+        # singularity remote login -u $user -p glpat-BSwDmLUnv8KzyQx1hNvA docker://registry.gitlab.com/cponder
+        # singularity pull docker://registry.gitlab.com/cponder/containers/ubuntu-pgi-openmpi/selene:latest
+        # the image is large in size and you'll need to allocate about 120GB of memory when pulling the image.  
+        echo $IMAGE_PATH
+        module load singularity
+        singularity exec --nv --bind /glade:/glade $IMAGE_PATH /bin/bash -c 'make clean && make'
+    - name: Check build
+      run: |
+        module load singularity
+        singularity exec --nv --bind /glade:/glade $IMAGE_PATH /bin/bash -c 'ls ./src/mhd3d.x'
+    - name: Verify GPU and CPU Results
+      run: | 
+        cp ./src/mhd3d.x ./TEST/Test_3D
+        #change the parameters 
+        #submit the job or run the script
+        
+        

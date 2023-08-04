@@ -1,0 +1,106 @@
+# Author: Haniye Kashgarani
+# Affiliation: University of Wyoming
+# ORCID: 0000-0001-6059-1920
+# Date: 2023-07-24T19:51:32+00:00
+# Github: haniyeka
+
+name: MURaM_Build_gpu_container_fftwheffte
+
+on:
+  #schedule:
+    #runs the workflow every Monday at midnight.
+    #- cron: '0 0 * * MON' 
+  push:
+    branches:
+      - main
+    paths: 
+      - ./
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+ 
+    
+jobs:
+  Build:
+    runs-on: [self-hosted, Linux, X64, casper]
+    # NOTE: I commented this part because we cannot use env variables when defining env variables. 
+    # see: https://brandur.org/fragments/github-actions-env-vars-in-env-vars and https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
+    #env:
+      #MURaM_HOME_DIR: /glade/work/$USER/muram_runners/$RUNNER_NAME/_work/MURaM_main/MURaM_main
+      #FFTW3_HOME: /glade/u/home/$USER/muram_lib/fftw3
+      #HEFFTE_HOME: /glade/u/home/$USER/muram_lib/heffte
+      #IMAGE_PATH: /glade/work/$USER/carl_fftw_heffte_1.0.sif
+      
+    steps:
+    - name: Set environmental variables
+      run: | 
+        # used the method in: https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
+        # NOTE: We cannot set and use the variable in the same step -- it will be empty
+        echo "MURaM_HOME_DIR=/glade/work/$USER/muram_runners/$RUNNER_NAME/_work/MURaM_main/MURaM_main" >> $GITHUB_ENV
+        echo "IMAGE_PATH=/glade/work/$USER/carl_fftw_heffte_1.0.sif" >> $GITHUB_ENV
+        # FFTW3_HOME, HEFFTE_HOME, and CUDA_HOME all already set in haniyka/carl_fftw_heffte:1.0 docker image.
+        # To see how I have created this image out of Carl's image visit: https://github.com/NCAR/Siparcs2023_CI_CD/wiki/Docker-Image:-haniyeka-carl_fftw_heffte:1.0
+    - name: Ensure we are not in login mode
+      run: |
+        # on caster or any pbs system, $PBS_ENVIRONMENT will give some informations about the job
+        if [[ $PBS_ENVIRONMENT != "PBS_INTERACTIVE" && $PBS_ENVIRONMENT != "PBS_BATCH" ]]; then
+          echo "::error::Workflow is running in login mode"
+          exit 1
+        else
+          echo "Workflow is running in $PBS_ENVIRONMENT mode!"
+          echo JobID = $PBS_JOBID
+        fi
+    - uses: actions/checkout@v3
+    - name: Ensure FFTW and HEFFTE Installation
+      run: |
+        module load singularity
+        singularity exec --nv --bind /glade:/glade $IMAGE_PATH /bin/bash -c 'ls /usr/share/muram_lib'
+        echo $FFTW3_HOME
+        echo $HEFFTE_HOME
+        echo $MURaM_HOME_DIR
+        echo $CUDA_HOME
+  
+    - name: Removing the Path References in Make_defs File
+      run: |
+        echo "replace the suitable make_def for casper..." 
+        cp casper/Make_defs_casper ./Make_defs
+        echo "see the paths inside: "
+        head -n 10 Make_defs
+        
+        echo "correct the path ..."
+        while IFS= read -r line; do
+          if [[ $line == MURaM_HOME_DIR* ]]; then
+            echo -e ""
+          elif [[ $line == FFTW3_HOME* ]]; then
+            echo -e ""
+          elif [[ $line == HEFFTE_HOME* ]]; then
+            echo -e ""
+          elif [[ $line == CUDA_HOME* ]]; then
+            echo -e ""
+          else
+            echo -e "$line"
+          fi
+        done < Make_defs > temp_file && mv temp_file Make_defs
+        
+        echo "see new paths inside: "
+        #head -n 10 Make_defs
+        cat Make_defs
+    - name: Build Muram
+      run: |
+        # The image is obtained from Carl's docker container. 
+        # singularity remote login -u $user -p glpat-BSwDmLUnv8KzyQx1hNvA docker://registry.gitlab.com/cponder
+        # singularity pull docker://registry.gitlab.com/cponder/containers/ubuntu-pgi-openmpi/selene:latest
+        # the image is large in size and you'll need to allocate about 120GB of memory when pulling the image.  
+        echo $IMAGE_PATH
+        module load singularity
+        singularity exec --nv --bind /glade:/glade $IMAGE_PATH /bin/bash -c 'make clean && make'
+    - name: Check build
+      run: |
+        module load singularity
+        singularity exec --nv --bind /glade:/glade $IMAGE_PATH /bin/bash -c 'ls ./src/mhd3d.x'
+    - name: Verify GPU and CPU Results
+      run: | 
+        cp ./src/mhd3d.x ./TEST/Test_3D
+        #change the parameters 
+        #submit the job or run the script

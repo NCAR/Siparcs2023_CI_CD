@@ -8,8 +8,8 @@
 name: matrixMult_OpenACC_Fortran
 
 on:
-  schedule:
-    - cron: '0 0 * * MON' 
+  #schedule:
+  #  - cron: '0 0 * * MON' 
   push:
     branches: 
       - main

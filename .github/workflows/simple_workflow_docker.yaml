@@ -7,8 +7,8 @@
 name: simple_workflow_singularity
 
 on:
-  schedule:
-    - cron: '0 0 * * MON' 
+  #schedule:
+  #  - cron: '0 0 * * MON' 
   push:
     branches: 
       - main
